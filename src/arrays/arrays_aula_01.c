@@ -1,27 +1,48 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-// Este programa lê uma quantidade de notas informada pelo usuário,
-// calcula a média dessas notas e exibe o resultado na tela.
-float calcularMedia(int qtd){
-    float notas[qtd];
-    float soma = 0;
+#define MAX 60
 
-    for(int i=0; i< qtd; i++){
-        printf("Digite a nota %d: ", i+1);
-        scanf("%f", &notas[i]);
-        soma += notas[i];
+float descobre(float *notas,int t){
+float temp;
+temp=0;
+for(int q=0;q<t;q++){
+    temp+=notas[q];
     }
-
-    return soma / qtd;
+return temp/t;
+}
+void carrega(int t,float *notas){
+    for(int k=0;k<t;k++){
+        printf("Digite sua nota:\n");
+        scanf("%f",&notas[k]);
+    }
 }
 
-int main(){
-    int qtd = 0;
-    printf("Digite a quantidade de notas que você quer saber a média: ");
-    scanf("%d", &qtd);
+int main(void){
+    int t;
+    float media;
+    float *notas;
+    notas=NULL;
+printf("Digite o Numero de notas necessarias para o calculo da media:\n");
+scanf("%i",&t);
+notas=malloc(t*sizeof(float));
 
-    float media = calcularMedia(qtd);
-    printf("A média das notas é: %.2f\n", media);
+if(notas==NULL){
+fprintf(stderr,"Erro De Alocação");
+}
+carrega(t,notas);
+media=descobre(notas,t);
+printf("Sua Media:%.2f\n",media);
 
-    return 0;
+if(media>=MAX){
+    printf("Aprovado!!\n");
+}
+else{
+    printf("Reprovado\n");
+}
+
+free(notas);
+
+return 0;
+
 }
